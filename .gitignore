@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+ops.db
+test.db
+.env
+node_modules/
+dist/
+.DS_Store
