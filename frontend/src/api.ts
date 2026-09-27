@@ -86,27 +86,38 @@ export type AgentMsg = {
 
 export const api = {
   dashboard: () => req<Dashboard>("/dashboard"),
-  customers: (q = "") => req<Customer[]>(`/customers${q ? `?q=${encodeURIComponent(q)}` : ""}`),
-  createCustomer: (body: Omit<Customer, "id">) =>
+
+  customers: (q = "") =>
+    req<Customer[]>(`/customers${q ? `?q=${encodeURIComponent(q)}` : ""}`),
+  createCustomer: (body: Omit<Customer, "id" | "created_at">) =>
     req<Customer>("/customers", { method: "POST", body: JSON.stringify(body) }),
+  updateCustomer: (id: number, body: Omit<Customer, "id" | "created_at">) =>
+    req<Customer>(`/customers/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+
   invoices: () => req<Invoice[]>("/invoices"),
   createInvoice: (body: { customer_id: number; amount: number; due_date: string; description: string }) =>
     req<Invoice>("/invoices", { method: "POST", body: JSON.stringify(body) }),
   setInvoiceStatus: (id: number, status: string) =>
     req<Invoice>(`/invoices/${id}/status?status=${status}`, { method: "PATCH" }),
+
   products: () => req<Product[]>("/products"),
   createProduct: (body: Omit<Product, "id">) =>
     req<Product>("/products", { method: "POST", body: JSON.stringify(body) }),
   stock: (id: number, delta: number) =>
     req<Product>(`/products/${id}/stock`, { method: "PATCH", body: JSON.stringify({ delta }) }),
+
   tasks: () => req<Task[]>("/tasks"),
   createTask: (body: Partial<Task> & { title: string }) =>
     req<Task>("/tasks", { method: "POST", body: JSON.stringify(body) }),
   updateTask: (id: number, body: Task) =>
     req<Task>(`/tasks/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+
   inbox: () => req<Inquiry[]>("/inbox"),
+  createInquiry: (body: { sender: string; email: string; subject: string; body: string }) =>
+    req<Inquiry>("/inbox", { method: "POST", body: JSON.stringify(body) }),
   replyInbox: (id: number, reply: string) =>
     req<Inquiry>(`/inbox/${id}/reply`, { method: "POST", body: JSON.stringify({ reply }) }),
+
   messages: () => req<AgentMsg[]>("/agent/messages"),
   ask: (message: string) =>
     req<{ reply: string; tools_used: string[] }>("/agent/ask", {
