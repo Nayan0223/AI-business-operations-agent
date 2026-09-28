@@ -128,3 +128,24 @@ export const api = {
 
 export const money = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+
+export type AdminSettings = {
+  app_name: string;
+  openai_api_key_masked: string;
+  openai_api_key_set: boolean;
+  openai_model: string;
+  database_url_masked: string;
+  cors_origins: string;
+};
+
+export type DbTable = { table: string; columns: string[]; rows: Record<string, unknown>[]; total: number };
+
+export const adminApi = {
+  auth:     (pin: string) => req<{ ok: boolean }>("/admin/auth", { method: "POST", body: JSON.stringify({ pin }) }),
+  settings: () => req<AdminSettings>("/admin/settings"),
+  saveSettings: (body: { openai_api_key?: string; openai_model?: string; admin_pin?: string }) =>
+    req<{ ok: boolean }>("/admin/settings", { method: "PATCH", body: JSON.stringify(body) }),
+  tables:   () => req<{ tables: string[] }>("/admin/db/tables"),
+  tableRows: (table: string, limit = 100) => req<DbTable>(`/admin/db/tables/${table}?limit=${limit}`),
+  users:    () => req<{ users: { id: number; name: string; role: string; email: string }[] }>("/admin/users"),
+};

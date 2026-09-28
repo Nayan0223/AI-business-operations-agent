@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from . import models  # noqa: F401
 from .config import settings
 from .db import Base, SessionLocal, engine
-from .routers import agent, ops
+from .routers import admin, agent, ops
 from .seed import seed_if_empty
 from .services import mark_overdue
 
@@ -43,6 +43,7 @@ app.add_middleware(
 
 app.include_router(ops.router, prefix="/api")
 app.include_router(agent.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
 
 
 @app.get("/api/health")

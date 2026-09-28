@@ -10,6 +10,7 @@ import {
   api,
   money,
 } from "./api";
+import { AdminPanel } from "./AdminPanel";
 
 type View = "desk" | "agent" | "customers" | "invoices" | "stock" | "tasks" | "inbox";
 
@@ -29,6 +30,7 @@ export function App() {
   const [dash, setDash] = useState<Dashboard | null>(null);
   const [error, setError] = useState("");
   const [loadingDash, setLoadingDash] = useState(true);
+  const [showAdmin, setShowAdmin] = useState(false);
 
   async function refreshDash() {
     setLoadingDash(true);
@@ -71,12 +73,18 @@ export function App() {
           ))}
         </nav>
 
+        <button className="admin-rail-btn" onClick={() => setShowAdmin(true)}>
+          ⚙ Admin
+        </button>
+
         <p className="rail-foot">
           <span className="status-dot" />
-          Local agent · SQLite
+          Local agent · PostgreSQL
           <br />Works without an API key
         </p>
       </aside>
+
+      {showAdmin && <AdminPanel onClose={() => setShowAdmin(false)} />}
 
       {/* ── Main ── */}
       <main>

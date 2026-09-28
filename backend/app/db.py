@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlgitlchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from .config import settings
