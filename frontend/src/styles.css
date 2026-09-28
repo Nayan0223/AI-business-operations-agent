@@ -15,10 +15,10 @@
   --line-2:   #2f3d36;
 
   /* Text */
-  --text:     #e4ede5;
-  --text-2:   #b8c8bc;
-  --muted:    #7a9082;
-  --muted-2:  #566860;
+  --text:     #e0f2fe;
+  --text-2:   #bae6fd;
+  --muted:    #7dd3fc;
+  --muted-2:  #38bdf8;
 
   /* Brand accent */
   --lime:     #c8f250;
@@ -550,11 +550,7 @@ tr.warn { background: rgba(228,181,106,0.03); }
 .field { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 120px; }
 .field label { font-size: 10px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
 
-input[type="text"],
-input[type="email"],
-input[type="number"],
-input[type="date"],
-input[type="search"],
+input,
 select,
 textarea {
   background: var(--panel);
@@ -623,7 +619,7 @@ textarea { resize: vertical; min-height: 80px; }
   font-size: 12px;
   transition: all 0.15s;
 }
-.chips button:hover { background: var(--panel-2); border-color: var(--lime-dim); color: var(--lime); }
+.chips button:hover { background: var(--panel-2); border-color: rgba(56, 189, 248, 0.4); color: #38bdf8; }
 
 .transcript {
   flex: 1;
@@ -666,8 +662,8 @@ textarea { resize: vertical; min-height: 80px; }
 
 .bubble.user {
   margin-left: auto;
-  background: linear-gradient(135deg, #1e3524 0%, #162b1c 100%);
-  border: 1px solid rgba(200,242,80,0.15);
+  background: linear-gradient(135deg, #0f2942 0%, #0a1929 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
   border-radius: 16px 16px 4px 16px;
 }
 
@@ -699,8 +695,18 @@ textarea { resize: vertical; min-height: 80px; }
 
 .composer input {
   flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--line-2);
+  color: var(--text);
   border-radius: 999px;
   padding: 11px 18px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.composer input:focus {
+  border-color: var(--lime-dim);
+  box-shadow: 0 0 0 3px rgba(200,242,80,0.1);
 }
 
 .composer button {
